@@ -1,0 +1,14 @@
+{
+  "52347": "Native imports passed; diagnostic print incorrectly accessed Ray ActorClass.__name__.",
+  "52351": "Native imports passed; CUDA architecture guard failed on HIP.",
+  "52352": "Conversion auto-attention conflicted with container NVTE_FLASH_ATTN=0.",
+  "52353": "Training attention override alone insufficient: conversion runs first.",
+  "52354": "COMPLETED: native one-GPU SFT, 2 updates, losses 1.8809/1.6694, step_2 checkpoint.",
+  "52355": "SC requires save_data_plane with replay-capable sampler.",
+  "52356": "KV recompute flag and inference cache mode must agree.",
+  "52357": "Ray AMD masking caused invalid GPU ordinal; Gym venv lacked container wandb.",
+  "52358": "GPU mask and Gym fixes worked; 0.6B cache only had config. Cancelled after failure; pinned weights downloaded.",
+  "52359": "Async checkpoint default required nvidia-resiliency-ext. Cancelled after failure; switched to sync saves.",
+  "52360": "GPU memory diagnostic required missing amdsmi. Gym readiness future delayed exception; terminated only its actor to surface original error.",
+  "52361": "Student/generation model init and ROCm memory logging passed; missing TransferQueue package."
+}

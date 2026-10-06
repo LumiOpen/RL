@@ -1,0 +1,72 @@
+{
+  "target_updates": 50,
+  "resume_from_updates": 20,
+  "additional_updates": 30,
+  "source_runs": {
+    "routed": "52376",
+    "control": "52732"
+  },
+  "continuation_runs": {
+    "routed": "extend50_routed",
+    "control": "extend50_control"
+  },
+  "configs": {
+    "routed": "extend_routed_50.yaml",
+    "control": "extend_control_50.yaml"
+  },
+  "dataset": {
+    "file": "data/mixed_pilot.jsonl",
+    "sha256": "aea1c32b0275898150e98fd8c858ca46f36954e43e8a2fdcbcbe8846d8ae9c9b",
+    "unique_prompts": 640,
+    "prompts_per_update": 32,
+    "responses_per_prompt": 2,
+    "max_epochs": 3,
+    "shuffle": false,
+    "note": "Continue the same balanced prompt stream; repeated epochs, not fresh prompts."
+  },
+  "optimizer": "Restore Adam state and constant 1e-4 scheduler from the step-20 checkpoint; no dtype changes.",
+  "evaluation": {
+    "coding_problems": 175,
+    "coding_repeats": 4,
+    "aime_problems": 30,
+    "aime_repeats": 4,
+    "coding_baseline": "experiments/coding_opd/run_eval_50305/graded.jsonl"
+  },
+  "automation": {
+    "state": "extension_state.json",
+    "monitor": "monitor_extension.py",
+    "monitor_job": "53205",
+    "resume_preflight_job": "53204",
+    "stall_timeout_seconds": 10800,
+    "retries_without_checkpoint_progress": 3,
+    "max_attempts_per_stage": 8,
+    "training_time_limit_hours": 24,
+    "internal_checkpoint_deadline_hours": 23,
+    "next_stages": [
+      "export_validation",
+      "coding_and_aime_generation",
+      "isolated_coding_grading",
+      "paired_comparison_and_wandb"
+    ],
+    "initial_training_jobs": {
+      "routed": "53206",
+      "control": "53207"
+    }
+  },
+  "decision": "Evaluate at 50 before considering an extension to 100. No automatic extension beyond 50.",
+  "validation": {
+    "resume_preflight": "53204 completed; restored2\u21923, consumed8\u219212, resumed epoch2\u21923, optimizer preserved, routing exact, frozen teachers unchanged",
+    "config_check": "Resolved config diff limited to step/epoch budget, scheduler restoration, internal deadline, W&B group; optimizer checkpoint detected for both arms",
+    "controller_tests": "9 passed",
+    "report_check": "Step50 paths and paired scoring exercised with saved step20 fixtures in a temporary directory",
+    "full_model_startup": "Both 53206/53207 restored step20, passed native routing audits with exact equality, and started rollout collection at 15:00 UTC on October 2."
+  },
+  "completion": {
+    "timestamp_utc": "2026-10-03T09:33:37Z",
+    "automatic_chain_completed": true,
+    "retries": 0,
+    "results": "extension_50_results.json",
+    "wandb_url": "https://wandb.ai/rahular/opd-tests/runs/mopd-comparison-extend50_routed-extend50_control",
+    "decision": "No clear learning benefit; coding extension gates false for both arms. Investigate increased truncation before considering 100 updates."
+  }
+}

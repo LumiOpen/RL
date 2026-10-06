@@ -1,0 +1,130 @@
+defaults: ../../examples/configs/recipes/llm/mopd-qwen3-1.7b-3n8g-megatron-pack-single-controller.yaml
+grpo:
+  num_prompts_per_step: 4
+  num_generations_per_prompt: 1
+  max_num_steps: 2
+  max_num_epochs: 2
+  overlong_filtering: false
+  val_at_start: false
+  adv_estimator:
+    name: opd
+async_rl:
+  recompute_kv_cache_after_weight_updates: true
+  sampler:
+    max_lookahead_versions: 0
+  max_buffered_rollouts: 4
+  generation_fleet_health:
+    enabled: false
+    refit_timeout_s: null
+policy:
+  model_name: /shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/rocm_mopd/data/Qwen3-0.6B
+  tokenizer:
+    name: ${policy.model_name}
+    chat_template: null
+  train_global_batch_size: 4
+  train_micro_batch_size: 1
+  generation_batch_size: 4
+  max_total_sequence_length: 512
+  logprob_chunk_size: 256
+  sequence_packing:
+    enabled: true
+    train_mb_tokens: 512
+    sequence_length_round: 64
+  dynamic_batching:
+    enabled: false
+  megatron_cfg:
+    attention_backend: fused
+    tensor_model_parallel_size: 1
+    pipeline_model_parallel_size: 1
+    context_parallel_size: 1
+    sequence_parallel: false
+    activation_checkpointing: false
+    apply_rope_fusion: false
+    bias_activation_fusion: false
+    checkpoint:
+      async_save: false
+    scheduler:
+      lr_warmup_iters: 0
+      lr_decay_iters: 2
+  generation:
+    backend: megatron
+    refit_transport: mcore
+    max_new_tokens: 128
+    temperature: 1.0
+    mcore_generation_config:
+      refit_backend: nccl
+      kv_cache_management_mode: recompute
+      cuda_graph_impl: none
+      inference_cuda_graph_scope: none
+      num_cuda_graphs: null
+      use_cuda_graphs_for_non_decode_steps: false
+      expose_http_server: true
+      http_server_num_replicas: 1
+      buffer_size_gb: 1
+      max_tokens: 512
+      parsers: []
+    colocated:
+      enabled: false
+      resources:
+        gpus_per_node: 1
+        num_nodes: 1
+data:
+  num_workers: 0
+  train:
+    data_path: experiments/rocm_mopd/smoke.jsonl
+  validation: null
+env:
+  nemo_gym:
+    config_paths:
+    - responses_api_models/vllm_model/configs/vllm_model_for_training.yaml
+    - resources_servers/mopd_zero/configs/mopd_zero.yaml
+    math_with_judge: null
+    code_gen: null
+    python_version: /opt/venv/bin/python
+    skip_venv_if_present: true
+    model_endpoint_readiness_timeout_seconds: 0
+    uv_venv_dir: ${oc.env:NRL_MOPD_GYM_VENVS}
+    policy_model:
+      responses_api_models:
+        vllm_model:
+          uses_reasoning_parser: false
+cluster:
+  # Four one-GPU Ray role groups fit on one physical four-GPU allocation.
+  num_nodes: 4
+  gpus_per_node: 1
+  segment_size: null
+on_policy_distillation:
+  _override_: true
+  enabled: true
+  teacher_model_by_agent_name:
+    math_agent: ${policy.model_name}
+    coding_agent: Qwen/Qwen3-1.7B
+  default_teacher_alias: null
+  strict_agent_name_match: true
+  deduplicate_shared_teacher_checkpoints: true
+  non_colocated_teachers:
+    enabled: true
+    default_teacher_cfg:
+      tensor_model_parallel_size: 1
+      pipeline_model_parallel_size: 1
+      context_parallel_size: 1
+      num_nodes: 1
+      gpus_per_node: 1
+      precision: bf16
+      micro_batch_size: 1
+checkpointing:
+  enabled: true
+  metric_name: null
+  save_period: 1
+  save_optimizer: true
+  save_data_plane: true
+logger:
+  wandb_enabled: true
+  tensorboard_enabled: false
+  monitor_gpus: false
+  wandb:
+    entity: rahular
+    project: opd-tests
+    group: mopd-native-bringup
+    name: mopd-native-smoke
+    id: mopd-native-smoke

@@ -1,0 +1,27 @@
+{
+  "run_id": "coding-16k-seed42-50507",
+  "training_config": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/coding_opd/opd_16k.yaml",
+  "max_new_tokens": 16384,
+  "max_total_sequence_length": 17472,
+  "packing_token_budget": 17472,
+  "reference_4k_summary": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/coding_opd/run_eval_50468/summary.json",
+  "initial_adapter": "same original pre-OPD SFT adapter; fresh optimizer; never resume the 4K run or preflight",
+  "num_prompts_per_step": 512,
+  "generations_per_prompt": 4,
+  "seed": 42,
+  "max_steps": 20,
+  "training_gpus": 16,
+  "dataset_sha256": "1d6a76b16772b13bb944d14bfedd3f91e40622d6f3a680f9512710175362aa91",
+  "learning_rate": 0.0001,
+  "loss": "summed sampled reverse KL",
+  "evaluation": "Same 175 LCB problems x4 at 32K total, plus matched 120-sample AIME screen",
+  "preflight_job": 50507,
+  "limitation": "Longer rollouts increase the number of tokens contributing to the summed gradient as well as solution-completion coverage; this is not a token-budget-matched comparison.",
+  "preflight_status": "COMPLETED; GPU backward, checkpoint and parameter audit passed",
+  "training_job": 50509,
+  "training_started_utc": "2026-09-22T14:26:28Z",
+  "training_nodes": [
+    "tus1-p15-g49",
+    "tus1-p15-g50"
+  ]
+}

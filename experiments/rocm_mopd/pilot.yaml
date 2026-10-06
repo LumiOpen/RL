@@ -1,0 +1,62 @@
+defaults: ./native_lora_smoke.yaml
+grpo:
+  num_prompts_per_step: 32
+  num_generations_per_prompt: 2
+  max_num_steps: 20
+  max_num_epochs: 1
+async_rl:
+  max_buffered_rollouts: 32
+policy:
+  model_name: /shared_silo/scratch/rahul.aralikatte@amd.com/RL/experiments/tml_opd_replication/checkpoints/inference_sft_3000
+  tokenizer:
+    chat_template: /shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/tml_opd_replication/qwen3_historical.jinja
+  train_global_batch_size: 64
+  generation_batch_size: 64
+  max_total_sequence_length: 17472
+  sequence_packing:
+    train_mb_tokens: 17472
+    logprob_mb_tokens: 17472
+  megatron_cfg:
+    tensor_model_parallel_size: 2
+    sequence_parallel: true
+    activation_checkpointing: true
+    optimizer:
+      lr: 0.0001
+      min_lr: 0.0001
+    scheduler:
+      max_steps: 20
+      lr_decay_iters: 20
+  generation:
+    max_new_tokens: 16384
+    top_p: 1.0
+    top_k: null
+    stop_strings: ['<|im_end|>']
+    stop_token_ids: [151645]
+    mcore_generation_config:
+      buffer_size_gb: 32
+      max_tokens: 17472
+    colocated:
+      resources:
+        gpus_per_node: 2
+data:
+  shuffle: false
+  train:
+    data_path: /shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/rocm_mopd/data/mixed_pilot.jsonl
+cluster:
+  num_nodes: 4
+  gpus_per_node: 2
+on_policy_distillation:
+  teacher_model_by_agent_name:
+    math_agent: /shared_silo/scratch/rahul.aralikatte@amd.com/RL/experiments/tml_opd_replication/checkpoints/inference_run_opd_49581_step_100
+    coding_agent: /shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/tml_opd_replication/checkpoints/inference_run_opd_coding-16k-seed42-50507_step_100
+  non_colocated_teachers:
+    default_teacher_cfg:
+      tensor_model_parallel_size: 2
+      gpus_per_node: 2
+checkpointing:
+  checkpoint_must_save_by: '00:11:30:00'
+  save_period: 5
+  keep_top_k: 2
+logger:
+  wandb:
+    group: mopd-math-coding-pilot

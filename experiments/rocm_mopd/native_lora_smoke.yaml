@@ -1,0 +1,9 @@
+defaults: ./native_smoke.yaml
+policy:
+  megatron_cfg:
+    peft:
+      enabled: true
+      dim: 128
+      alpha: 32
+      target_modules: [linear_qkv, linear_proj, linear_fc1, linear_fc2]
+      dropout: 0.0

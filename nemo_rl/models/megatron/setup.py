@@ -14,6 +14,7 @@
 
 import copy
 import hashlib
+from importlib.metadata import version as distribution_version
 import json
 import os
 import threading
@@ -53,6 +54,7 @@ from megatron.bridge.training.initialize import (
 from megatron.bridge.training.model_load_save import load_model_config
 from megatron.bridge.training.optim import setup_optimizer
 from megatron.bridge.training.setup import (
+    _apply_peft_transformation,
     _create_peft_pre_wrap_hook,
     _update_model_config_funcs,
 )
@@ -2414,6 +2416,18 @@ def setup_model_and_optimizer(
         pre_wrap_hook.extend([apply_freeze])
 
     if use_peft:
+        if torch.version.hip is not None:
+            from megatron.bridge.peft import utils as peft_utils
+            from megatron.core.utils import get_te_version
+
+            def peft_package_version(name: str) -> str:
+                # AMD TE exposes its version on the module, without NVIDIA's metadata.
+                if name == "transformer-engine":
+                    return str(get_te_version())
+                return distribution_version(name)
+
+            peft_utils.version = peft_package_version
+
         peft_cfg = policy_cfg["megatron_cfg"].get("peft", {})
         if "dim" not in peft_cfg or peft_cfg["dim"] is None:
             raise ValueError(
@@ -2486,7 +2500,13 @@ def setup_model_and_optimizer(
         )
 
     if megatron_cfg.peft is not None:
-        pre_peft_hook = _create_peft_pre_wrap_hook(megatron_cfg, state)
+        if load_weights:
+            pre_peft_hook = _create_peft_pre_wrap_hook(megatron_cfg, state)
+        else:
+            # Refit supplies base and adapter weights after model construction.
+            def pre_peft_hook(model: list[MegatronModule]) -> list[MegatronModule]:
+                return _apply_peft_transformation(megatron_cfg.peft, model)
+
         megatron_cfg.model.register_pre_wrap_hook(pre_peft_hook)
 
         def composed_peft_hook(model: list[MegatronModule]) -> list[MegatronModule]:
@@ -2498,7 +2518,11 @@ def setup_model_and_optimizer(
         # Warm start the adapters from the donor checkpoint after the base
         # weights are loaded and fresh adapters are attached. Skipped when
         # resuming: the resume checkpoint already carries this run's adapters.
-        if peft_restore_dir is not None and not resume_checkpoint_exists:
+        if (
+            load_weights
+            and peft_restore_dir is not None
+            and not resume_checkpoint_exists
+        ):
             pre_wrap_hook.append(
                 _create_peft_warm_start_hook(megatron_cfg, state, peft_restore_dir)
             )

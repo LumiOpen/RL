@@ -1,0 +1,2 @@
+# The launcher supplies the pinned Gym source and locked dependency overlay.
+nemo-gym

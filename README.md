@@ -9,6 +9,20 @@
 
 </div>
 
+## AMD ROCm experiment results
+
+The MI325X SFT/OPD project is complete. The local math recipe improved AIME24
+accuracy from **54.58% to 61.25%** (960 samples); the coding follow-up improved
+LiveCodeBench from **33.71% to 39.57%** (700 samples). Native multi-teacher OPD
+completed correctness checks and a matched 50-update experiment, with **no
+reliable accuracy gain**. The recipes document their different training settings
+and evaluation sample counts.
+
+- [Single-teacher math recipe](TM_OPD_RECIPE.md)
+- [Single-teacher coding results](experiments/coding_opd/README.md)
+- [Multi-teacher recipe and final results](MOPD_RECIPE.md)
+- [ROCm setup, requirements and project status](experiments/README.md)
+
 ## 📣 News
 
 * [08/12/2026] MuseGlimmer RL is supported [on this branch](https://github.com/NVIDIA-NeMo/RL/tree/muse-glimmer-support) with the following [doc](https://github.com/NVIDIA-NeMo/RL/blob/muse-glimmer-support/docs/guides/models/muse-glimmer.md).

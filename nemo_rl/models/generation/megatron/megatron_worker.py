@@ -517,7 +517,10 @@ class MegatronGenerationMixin:
 
         # The value may be overwritten by `recompute_kv_cache_after_weight_updates`.
         kv_cache_management_mode = mcore_generation_config["kv_cache_management_mode"]
-        needs_static_kv_pointers = kv_cache_management_mode != "persist"
+        needs_static_kv_pointers = (
+            kv_cache_management_mode != "persist"
+            and mcore_generation_config["cuda_graph_impl"] != "none"
+        )
 
         materialize_only_last_token_logits = mcore_generation_config[
             "materialize_only_last_token_logits"
@@ -545,10 +548,10 @@ class MegatronGenerationMixin:
                     mcore_generation_config["mamba_inference_conv_states_dtype"]
                 )
 
-        # flashinfer's fused-RoPE kernel only dispatches fp16/bf16 q/k.
-        use_flashinfer_fused_rope = model_config.params_dtype in (
-            torch.float16,
-            torch.bfloat16,
+        # FlashInfer fused RoPE requires CUDA and fp16/bf16 q/k.
+        use_flashinfer_fused_rope = (
+            torch.version.hip is None
+            and model_config.params_dtype in (torch.float16, torch.bfloat16)
         )
 
         image_preprocessing_config = self._build_image_preprocessing_config(
@@ -570,7 +573,9 @@ class MegatronGenerationMixin:
             "static_kv_memory_pointers": needs_static_kv_pointers,
             "use_cuda_graphs_for_non_decode_steps": use_cuda_graphs_for_non_decode_steps,
             "use_flashinfer_fused_rope": use_flashinfer_fused_rope,
-            "sampling_backend": "flashinfer",
+            "sampling_backend": "torch"
+            if torch.version.hip is not None
+            else "flashinfer",
             "use_synchronous_zmq_collectives": True,
             "materialize_only_last_token_logits": materialize_only_last_token_logits,
             "enable_chunked_prefill": enable_chunked_prefill,
@@ -746,6 +751,11 @@ class MegatronGenerationMixin:
         start_text_gen_server(
             coordinator_addr=self.coordinator_addr,
             tokenizer=self.megatron_tokenizer,
+            chat_template=(
+                self.tokenizer.get_chat_template()
+                if self.tokenizer.chat_template
+                else None
+            ),
             rank=torch.distributed.get_rank(),
             server_port=server_port,
             parsers=gen_cfg["parsers"],

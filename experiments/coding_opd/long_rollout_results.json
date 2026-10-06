@@ -1,0 +1,141 @@
+{
+  "problems": 175,
+  "samples_per_problem": 4,
+  "opd_gain": {
+    "pass_at_1_difference": 0.03857142857142857,
+    "paired_problem_bootstrap_95_ci": [
+      0.014285714285714285,
+      0.06571428571428571
+    ],
+    "qualifies_for_extension": true
+  },
+  "comparison_to_4k": {
+    "reference_summary": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/coding_opd/run_eval_50468/summary.json",
+    "pass_at_1_difference": 0.04428571428571428,
+    "paired_problem_bootstrap_95_ci": [
+      0.017142857142857144,
+      0.07285714285714286
+    ]
+  },
+  "models": {
+    "opd": {
+      "pass_at_1": 0.3757142857142857,
+      "passed": 263,
+      "samples": 700,
+      "problem_bootstrap_95_ci": [
+        0.31,
+        0.44285714285714284
+      ],
+      "truncation_rate": 0.23857142857142857,
+      "mean_generated_tokens": 18395.252857142856,
+      "error_counts": {
+        "None": 263,
+        "no_code": 165,
+        "-4": 14,
+        "-3": 33,
+        "-2": 225
+      }
+    },
+    "student": {
+      "pass_at_1": 0.33714285714285713,
+      "passed": 236,
+      "samples": 700,
+      "problem_bootstrap_95_ci": [
+        0.2742857142857143,
+        0.4042857142857143
+      ],
+      "truncation_rate": 0.31142857142857144,
+      "mean_generated_tokens": 18676.25,
+      "error_counts": {
+        "None": 236,
+        "no_code": 211,
+        "-4": 24,
+        "-3": 5,
+        "-2": 224
+      }
+    }
+  },
+  "training_job": 50509,
+  "evaluation_job": 50531,
+  "grading_job": 50532,
+  "completed_updates": 20,
+  "mean_step_seconds": 2127.977,
+  "parameter_audit_passed": true,
+  "extension_job": 50549,
+  "extension_target": 100,
+  "final_100_updates": {
+    "problems": 175,
+    "samples_per_problem": 4,
+    "models": {
+      "opd": {
+        "pass_at_1": 0.39571428571428574,
+        "passed": 277,
+        "samples": 700,
+        "problem_bootstrap_95_ci": [
+          0.32857142857142857,
+          0.4642857142857143
+        ],
+        "truncation_rate": 0.17714285714285713,
+        "mean_generated_tokens": 17473.147142857142,
+        "error_counts": {
+          "None": 277,
+          "no_code": 124,
+          "-4": 17,
+          "-3": 33,
+          "-2": 249
+        }
+      },
+      "student": {
+        "pass_at_1": 0.33714285714285713,
+        "passed": 236,
+        "samples": 700,
+        "problem_bootstrap_95_ci": [
+          0.2742857142857143,
+          0.4042857142857143
+        ],
+        "truncation_rate": 0.31142857142857144,
+        "mean_generated_tokens": 18676.25,
+        "error_counts": {
+          "None": 236,
+          "no_code": 211,
+          "-4": 24,
+          "-3": 5,
+          "-2": 224
+        }
+      }
+    },
+    "opd_gain": {
+      "pass_at_1_difference": 0.05857142857142857,
+      "paired_problem_bootstrap_95_ci": [
+        0.03142857142857143,
+        0.08714285714285715
+      ],
+      "qualifies_for_extension": true
+    },
+    "comparison_to_4k": {
+      "reference_summary": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/coding_opd/run_eval_50468/summary.json",
+      "pass_at_1_difference": 0.06428571428571428,
+      "paired_problem_bootstrap_95_ci": [
+        0.03428571428571429,
+        0.09428571428571429
+      ]
+    },
+    "training_job": 51600,
+    "evaluation_job": 51668,
+    "grading_job": 51669,
+    "completed_updates": 100,
+    "parameter_audit_passed": true,
+    "aime": {
+      "samples": 120,
+      "accuracy": 0.6583333333333333,
+      "matched_sft_accuracy": 0.5916666666666667,
+      "accuracy_difference": 0.06666666666666667,
+      "paired_problem_bootstrap_95_ci": [
+        0.0,
+        0.13333333333333333
+      ],
+      "limitations": "Small regression screen: 30 problems and four samples each. Reference uses the corresponding original SFT seeds."
+    },
+    "aime_job": 51701
+  }
+}

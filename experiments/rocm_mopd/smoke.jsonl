@@ -1,0 +1,4 @@
+{"agent_ref":{"type":"responses_api_agents","name":"math_agent"},"responses_create_params":{"input":[{"role":"user","content":"What is 17 plus 24? Explain briefly."}]}}
+{"agent_ref":{"type":"responses_api_agents","name":"coding_agent"},"responses_create_params":{"input":[{"role":"user","content":"Write a Python function that returns the larger of two integers."}]}}
+{"agent_ref":{"type":"responses_api_agents","name":"math_agent"},"responses_create_params":{"input":[{"role":"user","content":"Solve 3x + 5 = 20. Explain briefly."}]}}
+{"agent_ref":{"type":"responses_api_agents","name":"coding_agent"},"responses_create_params":{"input":[{"role":"user","content":"Write a Python function that reverses a list without modifying its input."}]}}

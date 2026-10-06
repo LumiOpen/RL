@@ -1,0 +1,26 @@
+{
+  "job": 50507,
+  "gpus": 4,
+  "updates": 1,
+  "responses": 8,
+  "generation_lengths": [
+    16384,
+    16384,
+    16384,
+    16384,
+    10662,
+    16188,
+    7805,
+    7904
+  ],
+  "maximum_generated_tokens": 16384,
+  "mean_generated_tokens": 13511.875,
+  "loss": 0.5272,
+  "checkpoint": "step_1",
+  "parameter_audit_passed": true,
+  "missing_think_end": 4,
+  "contains_code_fence": 4,
+  "config_difference_verified": true,
+  "data_hash_unchanged": true,
+  "evaluation_self_comparison_passed": true
+}

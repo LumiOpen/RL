@@ -1,0 +1,30 @@
+{
+  "job_id": "52354",
+  "slurm_state": "COMPLETED",
+  "exit_code": "0:0",
+  "gpus": 1,
+  "gpu_type": "MI325X",
+  "elapsed_seconds": 171,
+  "model": "Qwen/Qwen3-1.7B",
+  "updates": 2,
+  "max_sequence_length": 256,
+  "losses": [
+    1.8809,
+    1.6694
+  ],
+  "second_update_training_seconds": 0.27529,
+  "second_update_checkpoint_seconds": 10.39754,
+  "checkpoint": "run_52354/checkpoints/step_2",
+  "wandb": "https://wandb.ai/rahular/opd-tests/runs/mopd-native-backend-52354",
+  "validated": [
+    "native Megatron GPU forward/backward/optimizer",
+    "checkpoint save"
+  ],
+  "scope": "Historical SFT-only bring-up check; final MOPD validation is recorded in final_results.json and MOPD_RECIPE.md.",
+  "outside_this_check": [
+    "checkpoint resume",
+    "multi-teacher routing on GPU",
+    "Megatron generation",
+    "native MOPD learning"
+  ]
+}

@@ -1,0 +1,7 @@
+defaults: ./pilot.yaml
+cluster:
+  num_nodes: 3
+on_policy_distillation:
+  teacher_model_by_agent_name:
+    math_agent: /shared_silo/scratch/hf_cache/hub/models--Qwen--Qwen3-8B/snapshots/b968826d9c46dd6066d109eabc6255188de91218
+    coding_agent: /shared_silo/scratch/hf_cache/hub/models--Qwen--Qwen3-8B/snapshots/b968826d9c46dd6066d109eabc6255188de91218

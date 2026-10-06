@@ -1,0 +1,187 @@
+{
+  "status": "complete",
+  "closed_on": "2026-10-06",
+  "completed_at_utc": "2026-10-03T09:33:37Z",
+  "baseline": {
+    "coding_correct": 236,
+    "coding_samples": 700,
+    "aime_correct": 71,
+    "aime_samples": 120
+  },
+  "arms": [
+    {
+      "arm": "routed",
+      "updates": 20,
+      "run": "experiments/rocm_mopd/run_52376",
+      "coding": {
+        "pass_at_1": 0.3414285714285714,
+        "passed": 239,
+        "samples": 700,
+        "problem_bootstrap_95_ci": [
+          0.27714285714285714,
+          0.4085714285714286
+        ],
+        "truncation_rate": 0.34714285714285714,
+        "mean_generated_tokens": 19257.422857142858,
+        "error_counts": {
+          "None": 239,
+          "no_code": 240,
+          "-4": 9,
+          "-3": 10,
+          "-2": 202
+        }
+      },
+      "aime": {
+        "samples": 120,
+        "accuracy": 0.6,
+        "matched_sft_accuracy": 0.5916666666666667,
+        "accuracy_difference": 0.008333333333333333,
+        "paired_problem_bootstrap_95_ci": [
+          -0.075,
+          0.08333333333333333
+        ],
+        "limitations": "Small regression screen: 30 problems and four samples each. Reference uses the corresponding original SFT seeds."
+      }
+    },
+    {
+      "arm": "control",
+      "updates": 20,
+      "run": "experiments/rocm_mopd/run_52732",
+      "coding": {
+        "pass_at_1": 0.34714285714285714,
+        "passed": 243,
+        "samples": 700,
+        "problem_bootstrap_95_ci": [
+          0.2857142857142857,
+          0.41285714285714287
+        ],
+        "truncation_rate": 0.28714285714285714,
+        "mean_generated_tokens": 18664.91857142857,
+        "error_counts": {
+          "None": 243,
+          "no_code": 199,
+          "-4": 10,
+          "-3": 15,
+          "-2": 233
+        }
+      },
+      "aime": {
+        "samples": 120,
+        "accuracy": 0.5583333333333333,
+        "matched_sft_accuracy": 0.5916666666666667,
+        "accuracy_difference": -0.03333333333333333,
+        "paired_problem_bootstrap_95_ci": [
+          -0.125,
+          0.058333333333333334
+        ],
+        "limitations": "Small regression screen: 30 problems and four samples each. Reference uses the corresponding original SFT seeds."
+      }
+    },
+    {
+      "arm": "routed",
+      "updates": 50,
+      "run": "experiments/rocm_mopd/run_extend50_routed",
+      "coding": {
+        "pass_at_1": 0.33714285714285713,
+        "passed": 236,
+        "samples": 700,
+        "problem_bootstrap_95_ci": [
+          0.2742857142857143,
+          0.4028928571428566
+        ],
+        "truncation_rate": 0.42714285714285716,
+        "mean_generated_tokens": 20315.448571428573,
+        "error_counts": {
+          "None": 236,
+          "no_code": 297,
+          "-4": 10,
+          "-3": 13,
+          "-2": 144
+        }
+      },
+      "aime": {
+        "samples": 120,
+        "accuracy": 0.55,
+        "matched_sft_accuracy": 0.5916666666666667,
+        "accuracy_difference": -0.041666666666666664,
+        "paired_problem_bootstrap_95_ci": [
+          -0.1,
+          0.008333333333333333
+        ],
+        "limitations": "Small regression screen: 30 problems and four samples each. Reference uses the corresponding original SFT seeds."
+      }
+    },
+    {
+      "arm": "control",
+      "updates": 50,
+      "run": "experiments/rocm_mopd/run_extend50_control",
+      "coding": {
+        "pass_at_1": 0.3514285714285714,
+        "passed": 246,
+        "samples": 700,
+        "problem_bootstrap_95_ci": [
+          0.28714285714285714,
+          0.4185714285714286
+        ],
+        "truncation_rate": 0.38,
+        "mean_generated_tokens": 19756.137142857144,
+        "error_counts": {
+          "None": 246,
+          "no_code": 264,
+          "-4": 13,
+          "-3": 9,
+          "-2": 168
+        }
+      },
+      "aime": {
+        "samples": 120,
+        "accuracy": 0.5416666666666666,
+        "matched_sft_accuracy": 0.5916666666666667,
+        "accuracy_difference": -0.05,
+        "paired_problem_bootstrap_95_ci": [
+          -0.15,
+          0.041666666666666664
+        ],
+        "limitations": "Small regression screen: 30 problems and four samples each. Reference uses the corresponding original SFT seeds."
+      }
+    }
+  ],
+  "paired_comparison_at_50": {
+    "lcb": {
+      "difference": -0.014285714285714285,
+      "paired_problem_bootstrap_95_ci": [
+        -0.03571428571428571,
+        0.008571428571428572
+      ],
+      "problems": 175
+    },
+    "aime": {
+      "difference": 0.008333333333333333,
+      "paired_problem_bootstrap_95_ci": [
+        -0.075,
+        0.09166666666666666
+      ],
+      "problems": 30
+    }
+  },
+  "conclusion": "Native MOPD execution validated; no reliable gain in this experiment. Neither arm meets the coding extension gate. No extension to 100.",
+  "limitations": [
+    "Single training seed; 30 AIME problems with four samples each.",
+    "Teacher checkpoints differ between arms, so teacher count is not isolated.",
+    "Native adapter, optimizer, batch and objective differ from successful DTensor recipes.",
+    "Continuation repeats the same 640 prompts. Rising truncation is an observation, not an isolated cause."
+  ],
+  "automation": {
+    "monitor_job": "53205",
+    "all_stages_completed": true,
+    "retries": 0,
+    "remaining_jobs": 0
+  },
+  "source_pins": {
+    "bridge": "5ed97996cc2b422904d18179375b6d7366915097",
+    "mcore": "1e7598cbfae888cdd3d741a351aae588d56f66c0",
+    "gym": "267305e2a7bf88153e8ebbca1029ecc1e0f67b25",
+    "modelopt": "43fd41a58d52c4e6e5dec1d1ff5989ecc737ae1a",
+    "transfer_queue": "c51614308b68c8d7a87c9b3ef62d59e14c69bde2"
+  }
+}

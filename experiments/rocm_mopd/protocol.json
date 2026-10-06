@@ -1,0 +1,68 @@
+{
+  "scope": "native MOPD correctness first, then a small matched mixed-domain pilot",
+  "student": "Original OpenThoughts3 Qwen3-8B-Base SFT step3000 merged HF model with fresh native LoRA r128 alpha32 on attention/MLP linears",
+  "candidate_math_teacher": "RL/experiments/tml_opd_replication/checkpoints/inference_run_opd_49581_step_100",
+  "candidate_coding_teacher": "RL-tm-opd-recipe/experiments/tml_opd_replication/checkpoints/inference_run_opd_coding-16k-seed42-50507_step_100",
+  "data": "320 DeepMath and 320 TACO training prompts, interleaved 50/50; audited against 205 held-out questions; data/mixed_pilot_manifest.json",
+  "evaluation": "previous 175 LiveCodeBench problems x4 and matched 30 AIME24 problems x4",
+  "gates": [
+    "native worker import",
+    "native GPU training/checkpoint",
+    "two distinct teacher routes and direct-score parity",
+    "self-teacher zero-advantage control",
+    "finite student update and frozen teachers",
+    "validate teacher headroom before accuracy pilot"
+  ],
+  "limitations": [
+    "Single training seed; 30 AIME problems with four samples each.",
+    "Teacher checkpoints differ between arms, so teacher count is not isolated.",
+    "Native adapter, optimizer, batch and objective differ from successful DTensor recipes.",
+    "Continuation repeats the same 640 prompts. Rising truncation is an observation, not an isolated cause."
+  ],
+  "source_pins": {
+    "bridge": "5ed97996cc2b422904d18179375b6d7366915097",
+    "mcore": "1e7598cbfae888cdd3d741a351aae588d56f66c0",
+    "gym": "267305e2a7bf88153e8ebbca1029ecc1e0f67b25",
+    "modelopt": "43fd41a58d52c4e6e5dec1d1ff5989ecc737ae1a",
+    "transfer_queue": "c51614308b68c8d7a87c9b3ef62d59e14c69bde2"
+  },
+  "smoke_model_revision": "Qwen/Qwen3-0.6B@c1899de289a04d12100db370d81485cdf75e47ca",
+  "runtime_gates": {
+    "native_smoke": "52363",
+    "resume": "52366",
+    "routing_frozen_teacher_audit": "52370",
+    "lora_audit": "52372",
+    "8b_long_preflight": "52374",
+    "native_export_smoke": "52375"
+  },
+  "monitor": {
+    "state": "pilot_state.json",
+    "tmux": "nemo-rocm:MOPD-Pilot",
+    "pipeline": [
+      "preflight",
+      "routed",
+      "control",
+      "export_routed",
+      "evaluate_routed",
+      "grade_routed",
+      "export_control",
+      "evaluate_control",
+      "grade_control",
+      "report"
+    ],
+    "status": "complete",
+    "final_controller_job": "53205"
+  },
+  "status": "complete",
+  "pilot_budget": {
+    "updates_per_arm": 20,
+    "prompts_per_update": 32,
+    "responses_per_prompt": 2,
+    "max_new_tokens": 16384,
+    "arms": [
+      "routed math/coding teachers",
+      "Qwen3-8B single teacher on the same mixed prompts"
+    ]
+  },
+  "final_results": "final_results.json"
+}

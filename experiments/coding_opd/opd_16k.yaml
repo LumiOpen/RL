@@ -1,0 +1,13 @@
+defaults: opd.yaml
+policy:
+  max_total_sequence_length: 17472
+  sequence_packing:
+    train_mb_tokens: 17472
+    logprob_mb_tokens: 17472
+  generation:
+    max_new_tokens: 16384
+teacher:
+  max_total_sequence_length: 17472
+  sequence_packing:
+    train_mb_tokens: 17472
+    logprob_mb_tokens: 17472

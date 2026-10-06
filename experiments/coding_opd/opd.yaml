@@ -1,0 +1,14 @@
+defaults: ../tml_opd_replication/opd.yaml
+distillation:
+  max_num_steps: 20
+  max_num_epochs: 3
+  seed: 42
+data:
+  tokenized_path: experiments/coding_opd/data/taco_historical.jsonl
+  task_name: coding
+  shuffle: true
+logger:
+  wandb:
+    group: coding-opd
+    name: coding-opd-r128-seed42
+    id: coding-opd-r128-seed42

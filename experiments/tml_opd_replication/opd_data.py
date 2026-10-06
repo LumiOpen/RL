@@ -24,8 +24,9 @@ from nemo_rl.environments.interfaces import EnvironmentReturn
 
 
 class HistoricalPromptDataset(torch.utils.data.Dataset):
-    def __init__(self, path):
+    def __init__(self, path, task_name="deepmath"):
         self.rows = [json.loads(line) for line in Path(path).read_text().splitlines()]
+        self.task_name = task_name
 
     def __len__(self):
         return len(self.rows)
@@ -41,7 +42,7 @@ class HistoricalPromptDataset(torch.utils.data.Dataset):
             "loss_multiplier": 1.0,
             "extra_env_info": {},
             "idx": index,
-            "task_name": "deepmath",
+            "task_name": self.task_name,
         }
 
 

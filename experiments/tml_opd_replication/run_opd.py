@@ -82,7 +82,10 @@ def main():
     config.policy["generation"] = configure_generation_config(
         config.policy["generation"], tokenizer
     )
-    dataset = HistoricalPromptDataset(config.data["tokenized_path"])
+    task_name = config.data.get("task_name", "deepmath")
+    dataset = HistoricalPromptDataset(
+        config.data["tokenized_path"], task_name=task_name
+    )
     environment = ZeroRewardEnvironment.options(
         runtime_env={"py_executable": sys.executable}
     ).remote()
@@ -118,7 +121,7 @@ def main():
             val_loader,
             tokenizer,
             loss,
-            {"deepmath": environment},
+            {task_name: environment},
             {},
             logger,
             checkpointer,

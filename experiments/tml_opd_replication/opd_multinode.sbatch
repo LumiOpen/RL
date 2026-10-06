@@ -29,7 +29,7 @@ export TML_HEAD_NODE
 TML_HEAD_NODE=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 export TML_HEAD_IP
 TML_HEAD_IP=$(getent ahostsv4 "${TML_HEAD_NODE}.amd.tus.tensorwave.lan" | awk 'NR==1 {print $1}')
-export TML_RAY_PORT=$((16000 + SLURM_JOB_ID % 10000))
+export TML_RAY_PORT=$((25000 + SLURM_JOB_ID % 10000))
 export TML_OPD_RUN_ID=${TML_OPD_RUN_ID:-$SLURM_JOB_ID}
 export TML_OPD_CONFIG=${TML_OPD_CONFIG:-experiments/tml_opd_replication/opd.yaml}
 mkdir -p "experiments/tml_opd_replication/run_opd_${TML_OPD_RUN_ID}"
