@@ -1,0 +1,88 @@
+{
+  "training_job": 50450,
+  "evaluation_job": 50468,
+  "grading_job": 50469,
+  "aime_job": 50481,
+  "updates": 20,
+  "training_elapsed": "02:45:42",
+  "mean_step_seconds": 481.249,
+  "coding": {
+    "problems": 175,
+    "samples_per_problem": 4,
+    "opd_gain": {
+      "pass_at_1_difference": -0.005714285714285714,
+      "paired_problem_bootstrap_95_ci": [
+        -0.027142857142857142,
+        0.015714285714285715
+      ],
+      "qualifies_for_extension": false
+    },
+    "models": {
+      "opd": {
+        "pass_at_1": 0.3314285714285714,
+        "passed": 232,
+        "samples": 700,
+        "problem_bootstrap_95_ci": [
+          0.2671428571428571,
+          0.3985714285714286
+        ],
+        "truncation_rate": 0.4857142857142857,
+        "mean_generated_tokens": 21020.34,
+        "error_counts": {
+          "None": 232,
+          "no_code": 340,
+          "-4": 3,
+          "-3": 10,
+          "-2": 115
+        }
+      },
+      "student": {
+        "pass_at_1": 0.33714285714285713,
+        "passed": 236,
+        "samples": 700,
+        "problem_bootstrap_95_ci": [
+          0.2742857142857143,
+          0.4042857142857143
+        ],
+        "truncation_rate": 0.31142857142857144,
+        "mean_generated_tokens": 18676.25,
+        "error_counts": {
+          "None": 236,
+          "no_code": 211,
+          "-4": 24,
+          "-3": 5,
+          "-2": 224
+        }
+      }
+    }
+  },
+  "aime": {
+    "samples": 120,
+    "accuracy": 0.5333333333333333,
+    "matched_sft_accuracy": 0.5916666666666667,
+    "accuracy_difference": -0.058333333333333334,
+    "paired_problem_bootstrap_95_ci": [
+      -0.15,
+      0.03333333333333333
+    ],
+    "limitations": "Small regression screen: 30 problems and four samples each. Reference uses the corresponding original SFT seeds."
+  },
+  "training_loss_first_last": [
+    0.4378,
+    0.1312
+  ],
+  "parameter_audit": "All 8 ranks: frozen base unchanged, adapter changed; run audit passed",
+  "training_response_diagnostics": {
+    "step1": {
+      "responses": 2048,
+      "missing_think_end": 1638,
+      "with_code_fence": 412
+    },
+    "step20": {
+      "responses": 2048,
+      "missing_think_end": 1675,
+      "with_code_fence": 368
+    }
+  },
+  "interpretation": "No demonstrated coding gain. Increased evaluation truncation. 4096-token training rollouts mostly remain in reasoning; insufficient completion coverage is a hypothesis, not an established cause. Extension to 100 was not triggered."
+}

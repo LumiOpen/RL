@@ -1,0 +1,12 @@
+defaults: ./native_lora_smoke.yaml
+grpo:
+  max_num_steps: 3
+  max_num_epochs: 3
+policy:
+  megatron_cfg:
+    scheduler:
+      max_steps: 3
+      lr_decay_iters: 3
+      use_checkpoint_opt_param_scheduler: true
+checkpointing:
+  keep_top_k: 2

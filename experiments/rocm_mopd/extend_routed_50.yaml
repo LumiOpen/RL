@@ -1,0 +1,15 @@
+defaults: ./pilot.yaml
+grpo:
+  max_num_steps: 50
+  max_num_epochs: 3
+policy:
+  megatron_cfg:
+    scheduler:
+      max_steps: 50
+      lr_decay_iters: 50
+      use_checkpoint_opt_param_scheduler: true
+checkpointing:
+  checkpoint_must_save_by: '00:23:00:00'
+logger:
+  wandb:
+    group: mopd-math-coding-extension-50

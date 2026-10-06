@@ -1,0 +1,33 @@
+{
+  "arms": {
+    "routed": {
+      "lcb": 0.3414285714285714,
+      "aime": 0.6,
+      "run": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/rocm_mopd/run_52376"
+    },
+    "control": {
+      "lcb": 0.34714285714285714,
+      "aime": 0.5583333333333333,
+      "run": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/rocm_mopd/run_52732"
+    }
+  },
+  "routed_minus_control": {
+    "lcb": {
+      "difference": -0.005714285714285714,
+      "paired_problem_bootstrap_95_ci": [
+        -0.02857142857142857,
+        0.017142857142857144
+      ],
+      "problems": 175
+    },
+    "aime": {
+      "difference": 0.041666666666666664,
+      "paired_problem_bootstrap_95_ci": [
+        -0.03333333333333333,
+        0.125
+      ],
+      "problems": 30
+    }
+  },
+  "limitations": "Single-seed, 20-update native pilot; AIME has only four samples per problem. Fresh Megatron LoRA adapters differ from historical DTensor continuation."
+}

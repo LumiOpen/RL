@@ -1,0 +1,64 @@
+{
+  "training_steps": 50,
+  "arms": {
+    "routed": {
+      "lcb": 0.33714285714285713,
+      "aime": 0.55,
+      "run": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/rocm_mopd/run_extend50_routed",
+      "lcb_vs_sft": {
+        "pass_at_1_difference": 0.0,
+        "paired_problem_bootstrap_95_ci": [
+          -0.02142857142857143,
+          0.02
+        ],
+        "qualifies_for_extension": false
+      },
+      "aime_vs_sft": {
+        "difference": -0.041666666666666664,
+        "paired_problem_bootstrap_95_ci": [
+          -0.1,
+          0.008333333333333333
+        ]
+      }
+    },
+    "control": {
+      "lcb": 0.3514285714285714,
+      "aime": 0.5416666666666666,
+      "run": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL-tm-opd-recipe/experiments/rocm_mopd/run_extend50_control",
+      "lcb_vs_sft": {
+        "pass_at_1_difference": 0.014285714285714285,
+        "paired_problem_bootstrap_95_ci": [
+          -0.011428571428571429,
+          0.04
+        ],
+        "qualifies_for_extension": false
+      },
+      "aime_vs_sft": {
+        "difference": -0.05,
+        "paired_problem_bootstrap_95_ci": [
+          -0.15,
+          0.041666666666666664
+        ]
+      }
+    }
+  },
+  "routed_minus_control": {
+    "lcb": {
+      "difference": -0.014285714285714285,
+      "paired_problem_bootstrap_95_ci": [
+        -0.03571428571428571,
+        0.008571428571428572
+      ],
+      "problems": 175
+    },
+    "aime": {
+      "difference": 0.008333333333333333,
+      "paired_problem_bootstrap_95_ci": [
+        -0.075,
+        0.09166666666666666
+      ],
+      "problems": 30
+    }
+  },
+  "limitations": "Single-seed, 50-update native experiment; AIME has only four samples per problem. Fresh Megatron LoRA adapters differ from historical DTensor continuation."
+}

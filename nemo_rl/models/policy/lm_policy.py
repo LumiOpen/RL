@@ -250,7 +250,7 @@ class Policy(ColocatablePolicyInterface, GenerationInterface):
 
             env_vars = dict(config["megatron_cfg"].get("env_vars") or {})
 
-            if "TORCH_CUDA_ARCH_LIST" not in os.environ:
+            if torch.version.hip is None and "TORCH_CUDA_ARCH_LIST" not in os.environ:
                 raise RuntimeError(
                     "TORCH_CUDA_ARCH_LIST is not set. This is required in Megatron backend. This variable is set in our container, but "
                     "if you are running a custom container or baremetal, you may need to set this variable manually. Example: export TORCH_CUDA_ARCH_LIST='9.0 10.0'"

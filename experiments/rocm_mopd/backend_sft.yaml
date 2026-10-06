@@ -1,0 +1,35 @@
+defaults: ../rocm_sft/sft.yaml
+sft:
+  max_num_steps: 2
+  val_period: 0
+  val_at_start: false
+  val_at_end: false
+policy:
+  dtensor_cfg:
+    enabled: false
+  megatron_cfg:
+    enabled: true
+    attention_backend: fused
+    tensor_model_parallel_size: 1
+    pipeline_model_parallel_size: 1
+    context_parallel_size: 1
+    sequence_parallel: false
+    apply_rope_fusion: false
+    bias_activation_fusion: false
+    optimizer:
+      lr: 0.000005
+      min_lr: 0.000005
+    scheduler:
+      lr_warmup_iters: 0
+      lr_decay_iters: 2
+checkpointing:
+  save_period: 1
+logger:
+  wandb_enabled: true
+  wandb:
+    entity: rahular
+    project: opd-tests
+    group: mopd-native-bringup
+    name: mopd-native-backend-sft
+    id: mopd-native-backend-sft
+    mode: online

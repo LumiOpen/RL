@@ -201,3 +201,13 @@ AIME decoding settings were not published in the pinned recipe. See
   Evaluation uploads contain summaries, not the full generated responses.
 
 All training and evaluation jobs are complete.
+
+
+## Completed follow-up experiments
+
+The [coding-domain single-teacher experiment](experiments/coding_opd/README.md)
+reached **39.57% LiveCodeBench pass@1**, versus **33.71% SFT**, after 100 updates
+with 16K rollouts. The [native mixed-domain MOPD recipe](MOPD_RECIPE.md) completed
+a matched 20/50-update comparison but found no reliable accuracy benefit. Its
+adapter, optimizer, batch size and objective differ from this historical recipe;
+these experiments should not be treated as an isolated teacher-count comparison.

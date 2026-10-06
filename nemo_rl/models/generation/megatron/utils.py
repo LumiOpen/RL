@@ -265,4 +265,14 @@ def resolve_torch_dtype(val):
 def log_gpu_memory(tag: str) -> None:
     """Print a one-line GPU-memory summary for the calling rank."""
     rank = torch.distributed.get_rank() if torch.distributed.is_initialized() else 0
-    print(f"[GPU Rank {rank}] {tag} | {device_memory_summary()}")
+    if torch.version.hip is not None:
+        free, total = torch.cuda.mem_get_info()
+        mib = 1024**2
+        summary = (
+            f"alloc={torch.cuda.memory_allocated() / mib:.0f}MiB "
+            f"resv={torch.cuda.memory_reserved() / mib:.0f}MiB "
+            f"dev_mem={(total - free) / mib:.0f}MiB"
+        )
+    else:
+        summary = device_memory_summary()
+    print(f"[GPU Rank {rank}] {tag} | {summary}")

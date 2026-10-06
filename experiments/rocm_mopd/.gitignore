@@ -1,0 +1,7 @@
+run_*/
+packages/
+data/
+*.log
+deps/.venv/
+pilot_state.*
+extension_state.*

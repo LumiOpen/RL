@@ -1,0 +1,10 @@
+defaults: ./native_smoke.yaml
+grpo:
+  max_num_steps: 3
+  max_num_epochs: 3
+checkpointing:
+  keep_top_k: 2
+policy:
+  megatron_cfg:
+    scheduler:
+      use_checkpoint_opt_param_scheduler: true

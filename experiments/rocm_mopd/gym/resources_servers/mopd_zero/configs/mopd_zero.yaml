@@ -1,0 +1,27 @@
+mopd_zero:
+  resources_servers:
+    mopd_zero:
+      entrypoint: app.py
+      domain: e2e
+      verified: false
+      description: Reward-free math and coding distillation smoke test
+math_agent:
+  responses_api_agents:
+    simple_agent:
+      entrypoint: app.py
+      resources_server:
+        type: resources_servers
+        name: mopd_zero
+      model_server:
+        type: responses_api_models
+        name: policy_model
+coding_agent:
+  responses_api_agents:
+    simple_agent:
+      entrypoint: app.py
+      resources_server:
+        type: resources_servers
+        name: mopd_zero
+      model_server:
+        type: responses_api_models
+        name: policy_model

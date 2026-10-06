@@ -1,0 +1,21 @@
+{
+  "lcb_dataset_revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505",
+  "lcb_evaluator_revision": "28fef95ea8c9f7a547c8329f2cd3d32b92c1fa24",
+  "taco_dataset_revision": "d593ed0a2becbbc952230bb89be09189bf1056dc",
+  "evaluation_partition": "test6.jsonl (v6 additions, 175 candidate problems, 2025-01-04 through 2025-04-06)",
+  "evaluation_repeats": 4,
+  "temperature": 0.6,
+  "top_p": 0.95,
+  "top_k": 20,
+  "max_total_tokens": 32768,
+  "seed": 1234,
+  "student_model": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL/experiments/tml_opd_replication/checkpoints/inference_sft_3000",
+  "teacher_model": "/shared_silo/scratch/hf_cache/hub/models--Qwen--Qwen3-8B/snapshots/b968826d9c46dd6066d109eabc6255188de91218",
+  "base_model": "/shared_silo/scratch/hf_cache/hub/models--Qwen--Qwen3-8B-Base/snapshots/49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+  "sft_data": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL/experiments/tml_opd_replication/data/openthoughts3_seed0",
+  "sft_adapter": "/shared_silo/scratch/rahul.aralikatte@amd.com/RL/experiments/tml_opd_replication/run_49416/checkpoints/step_3000/policy/weights/model",
+  "wandb_project": "opd-tests",
+  "wandb_group": "coding-opd",
+  "decision_rule": "Require teacher minus student pass@1 >= 0.05 and paired problem-bootstrap 95% CI lower bound > 0 before the 8B-teacher pilot; otherwise evaluate 32B teacher.",
+  "limitations": "Post-training overlap audit only; unknown base-model pretraining exposure. Local decoding protocol, not a leaderboard reproduction."
+}

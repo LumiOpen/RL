@@ -1,0 +1,54 @@
+{
+  "problems": 175,
+  "samples_per_problem": 4,
+  "teacher_gap": {
+    "pass_at_1_difference": 0.15714285714285714,
+    "paired_problem_bootstrap_95_ci": [
+      0.11714285714285715,
+      0.2
+    ],
+    "qualifies_for_pilot": true
+  },
+  "models": {
+    "student": {
+      "pass_at_1": 0.33714285714285713,
+      "passed": 236,
+      "samples": 700,
+      "problem_bootstrap_95_ci": [
+        0.2742857142857143,
+        0.4042857142857143
+      ],
+      "truncation_rate": 0.31142857142857144,
+      "mean_generated_tokens": 18676.25,
+      "error_counts": {
+        "None": 236,
+        "no_code": 211,
+        "-4": 24,
+        "-3": 5,
+        "-2": 224
+      }
+    },
+    "teacher": {
+      "pass_at_1": 0.4942857142857143,
+      "passed": 346,
+      "samples": 700,
+      "problem_bootstrap_95_ci": [
+        0.4257142857142857,
+        0.5642857142857143
+      ],
+      "truncation_rate": 0.032857142857142856,
+      "mean_generated_tokens": 14696.117142857143,
+      "error_counts": {
+        "None": 346,
+        "no_code": 20,
+        "-4": 22,
+        "-3": 47,
+        "-2": 265
+      }
+    }
+  },
+  "baseline_job": "50305",
+  "grading_job": "50373",
+  "wandb_url": "https://wandb.ai/rahular/opd-tests/runs/coding-baseline-50305",
+  "metric": "Mean pass@1 over four samples/problem, not pass@4"
+}

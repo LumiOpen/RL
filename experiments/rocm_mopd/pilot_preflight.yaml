@@ -1,0 +1,13 @@
+defaults: ./pilot.yaml
+grpo:
+  num_prompts_per_step: 2
+  num_generations_per_prompt: 1
+  max_num_steps: 2
+policy:
+  train_global_batch_size: 2
+  generation_batch_size: 2
+checkpointing:
+  save_period: 1
+logger:
+  wandb:
+    group: mopd-native-bringup
